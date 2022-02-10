@@ -1,14 +1,22 @@
 import {Router} from "express";
-import {route} from "express/lib/router"
+
+import auth from "./middlewares/auth";
 
 import HelloController from "./controllers/HelloController";
 import UserController from "./controllers/UserController";
+import SessionsController from "./controllers/SessionsController";
 
 const routes = new Router();
 
+// --- ROTA PÚBLICA ---/
 routes.get('/hello', HelloController.index);
+routes.post('/sessions', SessionsController.create);
 
-// RESTFull
+// --- AUTENTICAÇÃO --- //
+
+// routes.use(auth);
+
+// ROTAS PRIVADAS
 routes.get('/users', UserController.index);
 routes.get('/users/:id', UserController.show);
 routes.post('/users', UserController.create);

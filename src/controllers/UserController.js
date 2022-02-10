@@ -85,7 +85,7 @@ class UserController {
         return res.status(500).json({ error:"Internal server error."})
       }
     }
-
+  // Bloco referente a rota de exclusão de usuários
     async destroy(req, res) {
       try {
         const { id } = req.params;
