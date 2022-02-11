@@ -8,15 +8,15 @@ import SessionsController from "./controllers/SessionsController";
 
 const routes = new Router();
 
-// --- ROTA PÚBLICA ---/
+// --- ROTAS PÚBLICAS --- //
 routes.get('/hello', HelloController.index);
 routes.post('/sessions', SessionsController.create);
 
 // --- AUTENTICAÇÃO --- //
 
-// routes.use(auth);
+routes.use(auth);
 
-// ROTAS PRIVADAS
+// -- ROTAS PRIVADAS --- //
 routes.get('/users', UserController.index);
 routes.get('/users/:id', UserController.show);
 routes.post('/users', UserController.create);

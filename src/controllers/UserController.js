@@ -13,6 +13,7 @@ class UserController {
       return res.status(500).json({error: "Internal server error."})
     }
   }
+
 // Bloco referente a rota de busca de um usuário por seu id
   async show(req, res) {
     try {
@@ -31,6 +32,7 @@ class UserController {
 
     } 
   }
+
 // Bloco referente a rota de criação de novo usuário
   async create(req, res) {
     try {
@@ -43,25 +45,18 @@ class UserController {
       }
 
         //criptografia do password de usuário usando o bcryptjs
-        // const encryptedPassword = await createPasswordHash(password);
+        const encryptedPassword = await createPasswordHash(password);
 
-        // const newUser =  await User.create({ 
-        //   email, 
-        //   password: encryptedPassword 
-        // });
-
-      const newUser =  await User.create({ 
-        email, 
-        password
-      });
+        const newUser =  await User.create({email, password: encryptedPassword});
+      // --- Fim do bloco de criptografia --- // 
 
       return res.status(201).json(newUser);
     } catch (err) {
       console.error(err);
       return res.status(500).json({ error:"Internal server error."})
     }
-    
   }
+
 //  Bloco referente a rota de update de usuários
     async update(req, res) {
       try {
@@ -73,11 +68,11 @@ class UserController {
         if (!user) {
           return res.status(404).json();
         }
-          // Implementar a criptografia de senha aqui também.
-         // const encryptedPassword = await createPasswordHash(password);
-        //  await user.updateOne({email, password:encryptedPassword})
 
-         await user.updateOne({ email, password});
+          // criptografia de senha aqui também.
+         const encryptedPassword = await createPasswordHash(password);
+         await user.updateOne({email, password:encryptedPassword})
+          // --- Fim do bloco de criptografia --- // 
 
          return res.status(200).json();
       } catch (err) {
@@ -85,6 +80,7 @@ class UserController {
         return res.status(500).json({ error:"Internal server error."})
       }
     }
+    
   // Bloco referente a rota de exclusão de usuários
     async destroy(req, res) {
       try {
